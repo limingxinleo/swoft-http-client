@@ -29,15 +29,8 @@ class ClientTest extends AbstractTestCase
             ]);
         };
 
-        $json = JsonHelper::decode($request()->getResponse()->getBody()->getContents(), true);
-        $json2 = JsonHelper::decode($request()->getResult(), true);
-
-        unset($json['headers']['X-Real-Ip']);
-        unset($json2['headers']['X-Real-Ip']);
-        unset($json['headers']['X-Forwarded-For']);
-        unset($json2['headers']['X-Forwarded-For']);
-
-        $this->assertEquals($json, $json2);
+        $response = $request();
+        $this->assertEquals($response->getResponse()->getBody()->getContents(), $response->getResult());
     }
 
     /**
