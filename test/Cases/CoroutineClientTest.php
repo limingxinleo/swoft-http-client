@@ -310,8 +310,8 @@ class CoroutineClientTest extends AbstractTestCase
             $client->setAdapter('coroutine');
 
             $request1 = $client->request('GET', '', ['_options' => $this->options]);
-            $request2 = $client->request('GET', '', ['_options' => $this->option]);
-            $request3 = $client->request('GET', '', ['_options' => $this->option]);
+            $request2 = $client->request('GET', '', ['_options' => $this->options]);
+            $request3 = $client->request('GET', '', ['_options' => $this->options]);
 
             /** @var Response $response1 */
             $response1 = $request1->getResponse();
@@ -338,26 +338,6 @@ class CoroutineClientTest extends AbstractTestCase
             $expected = sprintf('Swoft/%s PHP/%s', App::version(), PHP_VERSION);
             $this->assertEquals($expected, $client->getDefaultUserAgent());
 
-        });
-    }
-
-    /**
-     * @test
-     */
-    public function githubApi()
-    {
-        go(function () {
-            $client = new Client([
-                'base_uri' => 'https://api.github.com',
-                'headers' => [
-                    'User-Agent' => 'Swoft Cloud'
-                ],
-            ]);
-
-            $str = $client->get('/', [
-                '_options' => $this->options
-            ])->getResponse()->getBody()->getContents();
-            $this->assertNotEmpty($str);
         });
     }
 
